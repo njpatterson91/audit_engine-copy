@@ -2,6 +2,14 @@ from engine.loader import load_rules, load_youth_logs
 from engine.auditor import audit_youth
 from engine.reporter import save_results_to_json, save_summary_to_csv, save_individual_csv_reports
 from engine.calendar import generate_gt_calendar
+from pathlib import Path  # Add this import
+import sys
+# Add the project root (one level up from scripts/) to sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from engine.loader import load_rules, load_youth_logs
 
 OUTPUT_DIR = "data/audit_results"
 SUMMARY_FILE = f"{OUTPUT_DIR}/summary.csv"

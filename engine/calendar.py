@@ -6,6 +6,9 @@ import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import warnings
+warnings.filterwarnings("ignore", message="The figure layout has changed to tight")
+
 def generate_gt_calendar(youth_name, start_date, files, output_dir):
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
 

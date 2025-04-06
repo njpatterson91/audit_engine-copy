@@ -23,8 +23,17 @@ JUNK_FILE_RATE = 0.05
 
 START_DATE_RANGE = (datetime(2024, 1, 1), datetime(2024, 3, 1))
 
-FIRST_NAMES = ["Jordan", "Taylor", "Morgan", "Skyler", "Casey", "Avery", "Elliott", "Reese", "Dakota", "Emerson"]
-LAST_NAMES = ["Smith", "Johnson", "Brown", "Taylor", "Miller", "Davis", "Wilson", "Anderson", "Thomas", "Jackson"]
+# Expanded lists with more names (example with 20 names each; add more as needed)
+FIRST_NAMES = [
+    "Jordan", "Taylor", "Morgan", "Skyler", "Casey", "Avery", "Elliott", "Reese",
+    "Dakota", "Emerson", "Quinn", "Peyton", "Harper", "Rowan", "Blake", "Sasha",
+    "Alex", "Riley", "Logan", "Kendall"
+]
+LAST_NAMES = [
+    "Smith", "Johnson", "Brown", "Taylor", "Miller", "Davis", "Wilson", "Anderson",
+    "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez",
+    "Robinson", "Clark", "Lewis", "Lee"
+]
 
 MONTHS = [datetime(2024, m, 1).strftime('%B') for m in range(2, 13)]
 
@@ -37,8 +46,14 @@ def clear_old_data():
 def random_date(start, end):
     return start + timedelta(days=random.randint(0, (end - start).days))
 
-def generate_name(index):
-    return f"{FIRST_NAMES[index % len(FIRST_NAMES)]}{LAST_NAMES[index % len(LAST_NAMES)]}"
+def generate_name(existing_names):
+    """Generate a unique youth name by randomly combining first and last names.
+    Repeats until a unique name is found."""
+    while True:
+        name = f"{random.choice(FIRST_NAMES)}{random.choice(LAST_NAMES)}"
+        if name not in existing_names:
+            existing_names.add(name)
+            return name
 
 def maybe_misname(filename):
     mistake_type = random.choice(["missing_spaces", "wrong_ext", "swap_order"])
@@ -117,12 +132,18 @@ def generate_junk_files(youth):
 
 def main():
     clear_old_data()
+    
+    # Ensure the audit_results directory exists before writing the CSV log.
+    AUDIT_RESULT_DIR.mkdir(parents=True, exist_ok=True)
+    
     with open(GEN_LOG_CSV, "w", newline="") as log_file:
         log_writer = csv.writer(log_file)
         log_writer.writerow(["Youth", "Label", "Date", "Filename", "Status"])
+        
+        existing_names = set()  # To track and ensure unique youth names
 
-        for i in range(YOUTH_COUNT):
-            youth = generate_name(i)
+        for _ in range(YOUTH_COUNT):
+            youth = generate_name(existing_names)
             level = random.choice(SECURITY_LEVELS)
             start_date = random_date(*START_DATE_RANGE)
 
