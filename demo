@@ -1,0 +1,4 @@
+#!/bin/bash
+# demo - A script to run the Streamlit app
+
+streamlit run scripts/streamlit_app.py

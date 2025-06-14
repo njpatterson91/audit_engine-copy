@@ -5,7 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
-
+./data/audit_results
+./data/raw_logs
 # Distribution / packaging
 .Python
 build/

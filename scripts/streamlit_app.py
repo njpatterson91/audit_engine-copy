@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", message="The figure layout has changed to tigh
 # -----------------------------
 # Define Paths
 # -----------------------------
-AUDIT_RESULTS = Path("data/audit_results")
+AUDIT_RESULTS = Path("../data/audit_results")
 CALENDAR_DIR = AUDIT_RESULTS / "calendars"  # Folder where calendar PNGs are stored
 
 # -----------------------------
@@ -96,26 +96,26 @@ if page == "Detailed View":
     else:
         st.warning("Calendar image not found. Please run the audit to generate it.")
 
-    st.subheader("Missing Group Therapy Weeks")
-    missing_weeks = data.get("missing_gt_weeks", [])
-    if missing_weeks:
-        for item in missing_weeks:
-            week_label = item.get("week", "")
-            count = item.get("count", "")
-            required = item.get("required", "")
-            st.markdown(f"- `{week_label}`: {count} of {required} sessions")
-    else:
-        st.success("All GT requirements met!")
+    # st.subheader("Missing Group Therapy Weeks")
+    # missing_weeks = data.get("missing_gt_weeks", [])
+    # if missing_weeks:
+    #     for item in missing_weeks:
+    #         week_label = item.get("week", "")
+    #         count = item.get("count", "")
+    #         required = item.get("required", "")
+    #         st.markdown(f"- `{week_label}`: {count} of {required} sessions")
+    # else:
+    #     st.success("All GT requirements met!")
 
-    st.subheader("Misnamed Files")
-    misnamed = data.get("misnamed", [])
-    if misnamed:
-        st.code("\n".join(misnamed))
-    else:
-        st.success("No misnamed files found.")
+    # st.subheader("Misnamed Files")
+    # misnamed = data.get("misnamed", [])
+    # if misnamed:
+    #     st.code("\n".join(misnamed))
+    # else:
+    #     st.success("No misnamed files found.")
 
-    st.subheader("Debug Info")
-    st.code(f"Audit file: {audit_path}")
+    # st.subheader("Debug Info")
+    # st.code(f"Audit file: {audit_path}")
 
 # -----------------------------
 # Summary Dashboard Page
